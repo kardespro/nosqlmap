@@ -1,5 +1,6 @@
 import axios from 'axios';
-import randomUseragent from 'random-useragent';
+import randomUseragent from 'random-useragent'; 
+import { blue, green, red, bold, cyan, underline } from "colorette"
 import { generatePayloads } from '../extra/payloads';
 
 interface ScanOptions {
@@ -20,7 +21,9 @@ export async function scan(options: ScanOptions) {
   const { url, method, fieldName, isJson, cookies, headers, proxy } = options;
   const payloads = generatePayloads(fieldName, isJson);
   const userAgent = getRandomUserAgent();
-
+  console.log(`
+     [${bold(underline(green("#")))}]   -  ${bold(blue("NoSqlMap"))}  -  ${bold(underline(green("Started")))}  
+  `)
   for (const { payload, description } of payloads) {
     try {
       const requestConfig: any = {
@@ -45,12 +48,18 @@ export async function scan(options: ScanOptions) {
       }
 
       const response = await axios(requestConfig);
-      console.log(`Payload: ${payload}\nDescription: ${description}\nResponse: ${response.status} - ${response.statusText}`);
+      console.log(` [${bold(green('#'))}]   ${bold(green('FOUND'))}
+      
+      ${bold(cyan('Payload'))}: ${payload} 
+      ${bold(cyan('Description'))}: ${description}
+      ${bold(cyan('Response'))}: ${response.status} ${underline(blue('-'))} ${response.statusText}
+      
+      `);
     } catch (error) {
       if (axios.isAxiosError(error)) {
-        console.error(`Error: ${error.response?.status} - ${error.response?.statusText}`);
+        console.error(`${bold(red('Error'))}: ${error.response?.status} - ${error.response?.statusText}`);
       } else {
-        console.error(`Error: ${error}`);
+        console.error(`${bold(red('Error'))}: ${error}`);
       }
     }
   }

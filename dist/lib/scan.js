@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.scan = scan;
 const axios_1 = __importDefault(require("axios"));
 const random_useragent_1 = __importDefault(require("random-useragent"));
+const colorette_1 = require("colorette");
 const payloads_1 = require("../extra/payloads");
 function getRandomUserAgent() {
     return random_useragent_1.default.getRandom();
@@ -25,6 +26,9 @@ function scan(options) {
         const { url, method, fieldName, isJson, cookies, headers, proxy } = options;
         const payloads = (0, payloads_1.generatePayloads)(fieldName, isJson);
         const userAgent = getRandomUserAgent();
+        console.log(`
+     [${(0, colorette_1.bold)((0, colorette_1.underline)((0, colorette_1.green)("#")))}]   -  ${(0, colorette_1.bold)((0, colorette_1.blue)("NoSqlMap"))}  -  ${(0, colorette_1.bold)((0, colorette_1.underline)((0, colorette_1.green)("Started")))}  
+  `);
         for (const { payload, description } of payloads) {
             try {
                 const requestConfig = {
@@ -43,14 +47,20 @@ function scan(options) {
                     requestConfig.data = payload;
                 }
                 const response = yield (0, axios_1.default)(requestConfig);
-                console.log(`Payload: ${payload}\nDescription: ${description}\nResponse: ${response.status} - ${response.statusText}`);
+                console.log(` [${(0, colorette_1.bold)((0, colorette_1.green)('#'))}]   ${(0, colorette_1.bold)((0, colorette_1.green)('FOUND'))}
+      
+      ${(0, colorette_1.bold)((0, colorette_1.cyan)('Payload'))}: ${payload} 
+      ${(0, colorette_1.bold)((0, colorette_1.cyan)('Description'))}: ${description}
+      ${(0, colorette_1.bold)((0, colorette_1.cyan)('Response'))}: ${response.status} ${(0, colorette_1.underline)((0, colorette_1.blue)('-'))} ${response.statusText}
+      
+      `);
             }
             catch (error) {
                 if (axios_1.default.isAxiosError(error)) {
-                    console.error(`Error: ${(_a = error.response) === null || _a === void 0 ? void 0 : _a.status} - ${(_b = error.response) === null || _b === void 0 ? void 0 : _b.statusText}`);
+                    console.error(`${(0, colorette_1.bold)((0, colorette_1.red)('Error'))}: ${(_a = error.response) === null || _a === void 0 ? void 0 : _a.status} - ${(_b = error.response) === null || _b === void 0 ? void 0 : _b.statusText}`);
                 }
                 else {
-                    console.error(`Error: ${error}`);
+                    console.error(`${(0, colorette_1.bold)((0, colorette_1.red)('Error'))}: ${error}`);
                 }
             }
         }

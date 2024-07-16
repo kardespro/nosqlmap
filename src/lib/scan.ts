@@ -13,6 +13,7 @@ interface ScanOptions {
   proxy?: string;
 }
 
+
 function getRandomUserAgent() {
   return randomUseragent.getRandom();
 }

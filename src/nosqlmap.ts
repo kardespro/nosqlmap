@@ -72,7 +72,7 @@ async function runScan() {
     scan({
       url: argv.url,
       method: argv.method,
-      fieldName: argv.field || "",
+      fieldName: argv.method === 'GET' ? undefined : (argv.field || ""),
       isJson: argv.json,
       headers: argv.header,
       cookies: argv.cookie,

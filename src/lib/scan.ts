@@ -24,15 +24,15 @@ export async function scan(options: ScanOptions) {
      [${bold(underline(green("#")))}]   -  ${bold(blue("NoSqlMap"))}  -  ${bold(underline(green("Started")))}  
   `);
 
-  
+
   if (method.toUpperCase() === 'GET' && !fieldName) {
     const urlObj = new URL(url);
     for (const [key, value] of urlObj.searchParams.entries()) {
-      const payloads = generatePayloads(key, isJson);
-      await scanWithPayloads({ url, method, key, isJson, cookies, headers, proxy, payloads, userAgent });
+      const payloads = generatePayloads(key, isJson, true);
+      await scanWithPayloads({ url, method, fieldName: key, isJson, cookies, headers, proxy, payloads, userAgent });
     }
   } else {
-    const payloads = generatePayloads(fieldName || '', isJson);
+    const payloads = generatePayloads(fieldName || '', isJson, false);
     await scanWithPayloads({ url, method, fieldName, isJson, cookies, headers, proxy, payloads, userAgent });
   }
 }
@@ -40,11 +40,10 @@ export async function scan(options: ScanOptions) {
 interface ScanWithPayloadsOptions extends ScanOptions {
   payloads: { payload: string, description: string }[];
   userAgent: string;
-  key?: string;
 }
 
 async function scanWithPayloads(options: ScanWithPayloadsOptions) {
-  const { url, method, fieldName, isJson, cookies, headers, proxy, payloads, userAgent, key } = options;
+  const { url, method, fieldName, isJson, cookies, headers, proxy, payloads, userAgent } = options;
 
   for (const { payload, description } of payloads) {
     try {
@@ -64,9 +63,7 @@ async function scanWithPayloads(options: ScanWithPayloadsOptions) {
       };
 
       if (method.toUpperCase() === 'GET') {
-        const params = new URLSearchParams();
-        params.set(key || fieldName || '', payload);
-        requestConfig.params = params;
+        requestConfig.params = new URLSearchParams(payload);
       } else {
         requestConfig.data = payload;
       }

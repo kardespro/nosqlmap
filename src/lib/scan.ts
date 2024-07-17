@@ -2,7 +2,7 @@ import axios from 'axios';
 import randomUseragent from 'random-useragent'; 
 import { blue, green, red, bold, cyan, underline } from "colorette";
 import { generatePayloads } from '../extra/payloads';
-
+import { saveLog } from '../utils/log';
 interface ScanOptions {
   url: string;
   method: string;
@@ -69,6 +69,17 @@ async function scanWithPayloads(options: ScanWithPayloadsOptions) {
       }
 
       const response = await axios(requestConfig);
+      const hostname = new URL(url).hostname
+      const urlData = new URL(url)
+      await saveLog({
+        hostname: hostname,
+        log_text: `
+          ${hostname} - Log
+            Payload: ${urlData.protocol}${urlData.hostname}${urlData.pathname}${payload}
+            Description: ${description}
+            Response: ${response.status}
+        `
+      }).then((a) => console.log(a))
       console.log(` [${bold(green('#'))}]   ${bold(green('FOUND'))}
       
       ${bold(cyan('Payload'))}: ${payload} 

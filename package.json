@@ -1,7 +1,7 @@
 {
   "name": "nosqlmap",
-  "version": "1.0.0",
-  "description": "Search nosql injections",
+  "version": "1.0.0-beta",
+  "description": "NoSQLMap CLI Tool is a command-line interface (CLI) tool designed to test for NoSQL injection vulnerabilities using Node.js, TypeScript, and Axios. It supports both HTTP and HTTPS requests and works with all HTTP methods.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "nsq-build": "npx tsc",

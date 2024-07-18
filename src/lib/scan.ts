@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios, { AxiosResponse, AxiosRequestConfig, RawAxiosRequestHeaders } from 'axios';
 import randomUseragent from 'random-useragent'; 
 import { blue, green, red, bold, cyan, underline } from "colorette";
 import { generatePayloads } from '../extra/payloads';
@@ -47,7 +47,7 @@ async function scanWithPayloads(options: ScanWithPayloadsOptions) {
 
   for (const { payload, description } of payloads) {
     try {
-      const requestConfig: any = {
+      const requestConfig: AxiosRequestConfig = {
         method: method as any,
         url,
         headers: {

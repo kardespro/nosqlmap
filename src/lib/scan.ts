@@ -48,7 +48,7 @@ async function scanWithPayloads(options: ScanWithPayloadsOptions) {
   for (const { payload, description } of payloads) {
     try {
       const requestConfig: AxiosRequestConfig = {
-        method: method as any,
+        method: method as string,
         url,
         headers: {
           'Content-Type': isJson ? 'application/json' : 'application/x-www-form-urlencoded',

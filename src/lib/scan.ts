@@ -58,7 +58,8 @@ async function scanWithPayloads(options: ScanWithPayloadsOptions) {
         },
         proxy: proxy ? {
           host: new URL(proxy).hostname,
-          port: Number(new URL(proxy).port)
+          port: Number(new URL(proxy).port),
+          protocol: new URL(proxy).protocol
         } : undefined
       };
 

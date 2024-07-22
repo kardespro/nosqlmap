@@ -48,6 +48,10 @@ const argv = yargs(hideBin(process.argv))
     type: 'string',
     description: 'Proxy server to use (format: http://host:port)',
   })
+  .option('auto_proxy', {
+    type: 'boolean',
+    description: 'Proxy requests automatic',
+  })
   .option('burp', {
     type: 'string',
     description: 'Path to Burp Suite request file',
@@ -76,7 +80,8 @@ async function runScan() {
       isJson: argv.json,
       headers: argv.header,
       cookies: argv.cookie,
-      proxy: argv.proxy
+      proxy: argv.proxy,
+      autoProxy: argv.auto_proxy
     });
   }
 }

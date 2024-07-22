@@ -1,3 +1,3 @@
 # NoSqlMap - API
 
-**<a href="/api/waf.md">Configure Waf Signatures</a>**
+**<a href="/docs/api/waf.md">Configure Waf Signatures</a>**

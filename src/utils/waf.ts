@@ -24,6 +24,13 @@ async function pushWafSign(name: string, header: string, value?: string) {
   return wafSignatures.push({ name, header, value });
 }
 
+async function deleteWafSign(header: string){
+    const index = wafSignatures.map(x => {
+        return x.header;
+      }).indexOf(header);
+    return wafSignatures.splice(index,1)
+}
+
 async function detectWAF(url: string, headers?: Record<string, string>) {
   try {
     const response = await axios.get(url, { headers });
@@ -74,4 +81,4 @@ async function detectWAF(url: string, headers?: Record<string, string>) {
   }
 }
 
-export { detectWAF, pushWafSign };
+export { detectWAF, pushWafSign, deleteWafSign };

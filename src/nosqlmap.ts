@@ -2,6 +2,7 @@ import yargs from 'yargs';
 import { hideBin } from 'yargs/helpers';
 import { scan } from './lib/scan';
 import { parseBurpSuiteFile } from './utils/burp';
+import { parseConfig, ConfigOptions } from './extra/ConfigManager';
 
 const argv = yargs(hideBin(process.argv))
   .option('url', {
@@ -14,7 +15,7 @@ const argv = yargs(hideBin(process.argv))
     alias: 'm',
     type: 'string',
     description: 'HTTP method to use (GET, POST, PUT, DELETE, etc.)',
-    default: 'POST',
+    default: 'GET',
   })
   .option('field', {
     alias: 'f',
@@ -48,18 +49,34 @@ const argv = yargs(hideBin(process.argv))
     type: 'string',
     description: 'Proxy server to use (format: http://host:port)',
   })
-  .option('auto_proxy', {
-    type: 'boolean',
-    description: 'Proxy requests automatic',
-  })
   .option('burp', {
     type: 'string',
     description: 'Path to Burp Suite request file',
   })
+  .option('tor', {
+    type: 'boolean',
+    description: 'Use Tor network',
+    default: false,
+  })
+  .option('ai', {
+    type: 'boolean',
+    description: 'Use AI for payload generation',
+    default: false,
+  })
+  .option('config', {
+    type: 'string',
+    description: 'Configuration string in the format GEMINI_API_KEY=value',
+  })
   .help()
-  .parseSync(); 
+  .parseSync();
 
 async function runScan() {
+  let configOptions: ConfigOptions = {};
+
+  if (argv.config) {
+    configOptions = parseConfig(argv.config);
+  }
+
   if (argv.burp) {
     const { method, url, headers, body } = parseBurpSuiteFile(argv.burp);
     const fieldName = argv.field || 'username';
@@ -70,18 +87,21 @@ async function runScan() {
       isJson: argv.json,
       headers,
       cookies: argv.cookie,
-      proxy: argv.proxy
+      proxy: argv.proxy,
+      useAI: argv.ai,
+      apiKey: configOptions.geminiApiKey,
     });
   } else {
     scan({
       url: argv.url,
       method: argv.method,
-      fieldName: argv.method === 'GET' ? undefined : (argv.field || ""),
+      fieldName: argv.field || "",
       isJson: argv.json,
       headers: argv.header,
       cookies: argv.cookie,
       proxy: argv.proxy,
-      autoProxy: argv.auto_proxy
+      useAI: argv.ai,
+      apiKey: configOptions.geminiApiKey,
     });
   }
 }

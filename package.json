@@ -10,17 +10,27 @@
   "author": "Nego",
   "license": "MIT",
   "dependencies": {
+    "@google/generative-ai": "^0.16.0",
+    "@types/fs-extra": "^11.0.4",
     "@types/node": "^20.14.10",
     "@types/random-useragent": "^0.3.3",
     "@types/yargs": "^17.0.32",
     "axios": "^1.7.2",
+    "cheerio": "^1.0.0-rc.12",
     "colorette": "^2.0.20",
     "fs": "^0.0.1-security",
+    "fs-extra": "^11.2.0",
     "path": "^0.12.7",
     "random-useragent": "^0.5.0",
+    "request": "^2.88.2",
+    "socks-proxy-agent": "^8.0.4",
+    "tor-request": "^3.1.0",
     "ts-node": "^10.9.2",
     "tsx": "^4.16.2",
     "typescript": "^5.5.3",
     "yargs": "^17.7.2"
+  },
+  "devDependencies": {
+    "@types/request": "^2.48.12"
   }
 }

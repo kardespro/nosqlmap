@@ -42,6 +42,8 @@ npm run nsq -- --url=http://target.com/api --method=POST --field=username --json
 - `--header`: Headers to include in the request (key:value format)
 - `--proxy`: Proxy server to use (format: `http://host:port`)
 - `--burp`: Path to Burp Suite request file (Optional)
+- `--ai`: Use AI for payload generation.
+- `--config`: Configuration (format: `GEMINI_API_KEY=xxxx`).
 
 ### Example Command
 

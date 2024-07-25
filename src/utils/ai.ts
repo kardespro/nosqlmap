@@ -51,18 +51,14 @@ export async function generateAIPayloads(
     const chat = model.startChat({ safetySettings });
     const result = await chat.sendMessage(prompt);
 
-    // Yanıtın tamamlanmasını bekle
-    await waitForResponse(60000); // 60 saniye
+     await waitForResponse(60000); 
 
     const responseText = result.response.text();
-    console.log("Raw response:", responseText); // Yanıtı kontrol etmek için
-
-    // JSON kod bloklarını ayırın ve işleyin
+    console.log("Raw response:", responseText); 
     const codeBlockRegex = /```json\s*([\s\S]*?)\s*```/;
     const match = codeBlockRegex.exec(responseText);
 
     if (match && match[1]) {
-      // ` ```json` ve ` ``` ` işaretlerini temizleyin
       const cleanedJsonString = match[1].trim();
 
       let aiPayloads: AIPayload[] = [];
@@ -71,7 +67,6 @@ export async function generateAIPayloads(
         // JSON dizesini ayrıştırın
         const payloads = JSON.parse(cleanedJsonString);
 
-        // JSON verisini AIPayload formatına dönüştürün
         aiPayloads = Object.entries(payloads).map(([key, value]) => ({
           payload: JSON.stringify({ [key]: value }), // String formatında JSON verisi
           description: `AI generated payload for field ${fieldName}`,

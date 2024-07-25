@@ -64,8 +64,7 @@ export async function generateAIPayloads(
       let aiPayloads: AIPayload[] = [];
 
       try {
-        // JSON dizesini ayrıştırın
-        const payloads = JSON.parse(cleanedJsonString);
+       const payloads = JSON.parse(cleanedJsonString);
 
         aiPayloads = Object.entries(payloads).map(([key, value]) => ({
           payload: JSON.stringify({ [key]: value }), // String formatında JSON verisi

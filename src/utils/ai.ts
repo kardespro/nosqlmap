@@ -26,7 +26,7 @@ export async function generateAIPayloads(
   const software = await detectTechnologies(url);
   const prompt = `Generate multiple NoSQL injection payloads for the field "${fieldName}" in ${
     isJson ? "JSON" : "non-JSON"
-  } format. Provide the result in a single code block and ensure there are no additional messages or explanations. The response should only include the payloads in JSON format.`;
+  } format related to ${detectTechnologies} applications. Provide the result in a single code block and ensure there are no additional messages or explanations. The response should only include the payloads in JSON format.`;
 
   try {
     const safetySettings = [

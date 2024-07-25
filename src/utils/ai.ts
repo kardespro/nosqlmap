@@ -67,7 +67,7 @@ export async function generateAIPayloads(
        const payloads = JSON.parse(cleanedJsonString);
 
         aiPayloads = Object.entries(payloads).map(([key, value]) => ({
-          payload: JSON.stringify({ [key]: value }), // String formatında JSON verisi
+          payload: JSON.stringify({ [key]: value }), 
           description: `AI generated payload for field ${fieldName}`,
         }));
       } catch (jsonError) {

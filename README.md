@@ -58,6 +58,8 @@ npm run nsq -- --url=http://target.com/api --method=POST --field=username --json
 - `--header`: Headers to include in the request (key:value format).
 - `--cookie`: Cookies to include in the request.
 - `--proxy`: Proxy server to use (format: `http://host:port`).
+- `--ai`: Use AI for payload generation.
+- `--config`: Configuration (format: `GEMINI_API_KEY=xxxx`).
 
 
 
